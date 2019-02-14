@@ -30,6 +30,8 @@
         verify_ssl: "{{ verify_ssl }}"
       loop:
         - "{{ lookup('template', '../templates/config.yml') | from_yaml }}"
+        - "{{ lookup('template', '../templates/secrets.yml') | from_yaml }}"
+        - "{{ lookup('template', '../cloned/zdravomil/openshift/secret-api-keys.yml.j2') | from_yaml }}"
 
     - name: Deploy resource configs (no need to process them)
       # https://docs.ansible.com/k8s_module.html

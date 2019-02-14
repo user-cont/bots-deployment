@@ -19,3 +19,14 @@ api_key: ""
 
 # To work-around 'SSL: CERTIFICATE_VERIFY_FAILED'
 verify_ssl: no
+
+# -------------------------------------------------------------------
+# Secrets
+# -------------------------------------------------------------------
+
+# For Zdravomil
+# Generate your token @ https://github.com/settings/tokens/new
+github_api_key: ""
+
+# Sentry DSN
+sentry_dsn: ""

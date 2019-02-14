@@ -1,0 +1,47 @@
+---
+
+- name: Bots deployment
+  hosts: localhost
+  vars:
+    deployment: "{{ lookup('env', 'DEPLOYMENT') }}"
+  tasks:
+    - name: include variables
+      include_vars: ../vars/{{ deployment }}.yml
+
+    - name: Clone bots repos
+      connection: local
+      # https://docs.ansible.com/git_module.html
+      git:
+        depth: 1
+        dest: ../cloned/{{ item }}
+        recursive: no
+        repo: https://github.com/user-cont/{{ item }}.git
+      loop:
+        - ucho
+        - zdravomil
+
+    - name: Deploy templates (need to be processed)
+      # https://docs.ansible.com/k8s_module.html
+      k8s:
+        namespace: "{{ project }}"
+        definition: "{{ item }}"
+        host: "{{ host }}"
+        api_key: "{{ api_key }}"
+        verify_ssl: "{{ verify_ssl }}"
+      loop:
+        - "{{ lookup('template', '../templates/config.yml') | from_yaml }}"
+
+    - name: Deploy resource configs (no need to process them)
+      # https://docs.ansible.com/k8s_module.html
+      k8s:
+        namespace: "{{ project }}"
+        src: "{{ item }}"
+        host: "{{ host }}"
+        api_key: "{{ api_key }}"
+        verify_ssl: "{{ verify_ssl }}"
+      loop:
+        - ../templates/redis.yml
+        - ../templates/redis-commander.yml
+        - ../templates/flower.yml
+        - ../cloned/ucho/openshift-fedmsg.yml
+        - ../cloned/zdravomil/openshift/deployment.yml

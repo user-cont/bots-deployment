@@ -27,7 +27,7 @@
         definition: "{{ item }}"
         host: "{{ host }}"
         api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       loop:
         - "{{ lookup('template', '../templates/config.yml') | from_yaml }}"
         - "{{ lookup('template', '../templates/secrets.yml') | from_yaml }}"
@@ -40,7 +40,7 @@
         src: "{{ item }}"
         host: "{{ host }}"
         api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       loop:
         - ../templates/redis.yml
         - ../templates/redis-commander.yml

@@ -17,8 +17,8 @@ host: https://172.17.0.1:8443
 # Take the part after --token=
 api_key: ""
 
-# To work-around 'SSL: CERTIFICATE_VERIFY_FAILED'
-verify_ssl: no
+# To work-around 'SSL: CERTIFICATE_VERIFY_FAILED' when deploying to localhost
+validate_certs: no
 
 # -------------------------------------------------------------------
 # Secrets
